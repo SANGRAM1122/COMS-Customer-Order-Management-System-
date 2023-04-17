@@ -1,0 +1,133 @@
+create database COMS;
+use COMS;
+
+
+# Customer Table
+create table customer(customer_id int primary key, name varchar(25), address varchar(100), phone_number varchar(20), email_address varchar(50));
+insert into customer(customer_id, name, address, phone_number, email_address)
+values
+(1, 'Rahul Kumar', '123 Main Street, Mumbai', '9876543210', 'rahul.kumar@example.com'),
+(2, 'Neha Sharma', '456 Park Road, Delhi', '9876543211', 'neha.sharma@example.com'),
+(3, 'Ankit Patel', '789 1st Avenue, Ahmedabad', '9876543212', 'ankit.patel@example.com'),
+(4, 'Priya Singh', '12 2nd Street, Bengaluru', '9876543213', 'priya.singh@example.com'),
+(5, 'Amitabh Das', '34 3rd Lane, Kolkata', '9876543214', 'amitabh.das@example.com'),
+(6, 'Rohit Mehra', '567 Park Lane, Chennai', '9876543215', 'rohit.mehra@example.com'),
+(7, 'Sneha Chakraborty', '890 4th Road, Hyderabad', '9876543216', 'sneha.chakraborty@example.com'),
+(8, 'Rajesh Gupta', '345 5th Avenue, New Delhi', '9876543217', 'rajesh.gupta@example.com'),
+(9, 'Geeta Patel', '678 6th Street, Ahmedabad', '9876543218', 'geeta.patel@example.com'),
+(10, 'Shivani Singh', '901 7th Road, Mumbai', '9876543219', 'shivani.singh@example.com');
+
+
+# Products Table
+create table products(product_id int primary key, name varchar(25), descriptions varchar(100), price int, quantity_in_stock int);
+insert into products(product_id, name, descriptions, price, quantity_in_stock)
+values
+(1, 'Samsung Galaxy S21', 'Smartphone with 6.2 inch screen, 128GB storage', 699.99, 50),
+(2, 'Apple iPhone 12', 'Smartphone with 6.1 inch screen, 64GB storage', 799.99, 30),
+(3, 'Xiaomi Mi TV 4A', '55 inch LED TV with Smart features', 499.99, 20),
+(4, 'Sony PlayStation 5', 'Gaming console with 825GB SSD storage', 499.99, 10),
+(5, 'Canon EOS R6', 'Mirrorless camera with 20MP CMOS sensor', 2499.99, 5),
+(6, 'LG 55 inch OLED TV', '55 inch OLED TV with 4K resolution and Smart features', 1499.99, 15),
+(7, 'Dell XPS 13', 'Laptop with 13.3 inch display, Intel Core i7 processor, 16GB RAM, 512GB SSD', 1299.99, 25),
+(8, 'HP Pavilion Gaming Laptop', '15.6 inch FHD display, Intel Core i5 processor, 8GB RAM, 256GB SSD', 899.99, 12),
+(9, 'Bose QuietComfort 35 II', 'Wireless noise-cancelling headphones with Alexa voice control', 299.99, 8),
+(10, 'Samsung 49 inch QLED TV', '49 inch QLED TV with 4K resolution, Smart features and HDR', 899.99, 5);
+
+
+# SalesPeople Table
+create table salespeople(salesperson_id int primary key, name varchar(50), address varchar(100), phone_number varchar(20),
+email_address varchar(50));
+insert into salespeople(salesperson_id, name, address, phone_number, email_address)
+values
+(1, 'Rahul Sharma', '123 Main Street, Mumbai', '9876543210', 'rahul.sharma@example.com'),
+(2, 'Priya Patel', '456 Park Avenue, Ahmedabad', '9876543211', 'priya.patel@example.com'),
+(3, 'Siddharth Singh', '789 Broadway, Bangalore', '9876543212', 'siddharth.singh@example.com'),
+(4, 'Kavita Gupta', '1010 Fifth Avenue, Kolkata', '9876543213', 'kavita.gupta@example.com'),
+(5, 'Vijay Kumar', '1111 Sixth Street, Chennai', '9876543214', 'vijay.kumar@example.com'),
+(6, 'Sneha Sharma', '1212 Seventh Road, Pune', '9876543215', 'sneha.sharma@example.com'),
+(7, 'Amit Gupta', '1313 Eighth Street, New Delhi', '9876543216', 'amit.gupta@example.com'),
+(8, 'Neha Patel', '121 Main Street, Mumbai', '9876543217', 'neha.patel@example.com'),
+(9, 'Aryan Singh', '789 Park Avenue, Ahmedabad', '9876543218', 'aryan.singh@example.com'),
+(10, 'Rajiv Gupta', '1010 Broadway, Bangalore', '9876543219', 'rajiv.gupta@example.com');
+
+
+# Order Table
+create table orders(order_id int primary key, customer_id int , salesperson_id int, order_date date, order_total decimal(10, 2));
+insert into orders(order_id, customer_id, salesperson_id, order_date, order_total)
+values
+(1, 1, 1, '2022-01-01', 2500.00),
+(2, 2, 1, '2022-01-02', 1800.00),
+(3, 3, 2, '2022-01-03', 3500.00),
+(4, 4, 2, '2022-01-04', 1200.00),
+(5, 5, 3, '2022-01-05', 5000.00),
+(6, 6, 3, '2022-01-06', 2800.00),
+(7, 7, 4, '2022-01-07', 900.00),
+(8, 8, 4, '2022-01-08', 2000.00),
+(9, 1, 3, '2022-01-09', 4300.00),
+(10, 2, 4, '2022-01-10', 2100.00),
+(11, 3, 4, '2022-01-11', 3000.00);
+
+
+create table order_items
+(order_id int not null, product_id int not null, quantity int not null, item_total int not null, primary key(order_id, product_id));
+insert into order_items values
+(1, 101, 2, 500.00),
+(1, 102, 1, 300.00),
+(2, 103, 3, 750.00),
+(2, 104, 2, 600.00),
+(3, 105, 1, 200.00),
+(3, 106, 1, 100.00),
+(3, 107, 4, 1000.00),
+(4, 108, 2, 600.00),
+(4, 109, 1, 150.00),
+(4, 110, 3, 750.00);
+
+# Data Manipulation
+# products.product_id is not matching with order_items.product_id
+# Let's change
+update products set product_id = product_id + 100;
+
+# Let's Verify
+select * from products;
+
+# Next
+# order_items.item_total column having wrong values
+update order_items join products on products.product_id = order_items.product_id
+set item_total = products.price * order_items.quantity;
+
+# Let's Verify
+SELECT * FROM ORDER_ITEMS;
+
+# Now lets solve the Questions
+
+# Questions
+# 1. What is the total number of orders for each customer?
+select customer.customer_id, customer.name, count(orders.order_id) as numorders from customer
+join orders on customer.customer_id = orders.order_id
+group by customer.customer_id;
+select * from customer;
+
+# 2. What is the total revenue for each salesperson?
+select salespeople.salesperson_id, salespeople.name, sum(orders.order_total) from salespeople
+join orders on salespeople.salesperson_id = orders.salesperson_id group by salespeople.salesperson_id;
+
+
+# 3. What is the most popular product?
+select products.name from products join order_items on products.product_id = order_items.product_id
+group by order_items.product_id having sum(order_items.quantity) > 1;
+
+
+# 4. What is the total revenue for each product?
+select products.name, sum(order_items.item_total) from products
+join order_items on products.product_id = order_items.product_id
+group by order_items.product_id;
+
+
+# 5. What is the total revenue for each month?
+select month(orders.order_date) as month, sum(order_items.item_total) as total_revenue from orders join order_items
+on orders.order_id = order_items.order_id
+group by month(orders.order_date);
+
+use coms1;
+select * from customer;
+select * from orders;
